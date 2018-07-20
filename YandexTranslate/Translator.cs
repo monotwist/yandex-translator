@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace YandexTranslate
 {
-    public class Translater
+    public class Translator
     {
         private static HttpClient client = new HttpClient();
 

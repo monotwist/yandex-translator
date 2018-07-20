@@ -56,13 +56,13 @@ namespace YandexTranslate
 
             var srcLang = LanguageProvider.FindCodeByFullName(srcFullName);
             if (srcFullName == "Auto" || srcFullName == "Авто")
-                srcLang = await Translater.DetectLanguage(text);
+                srcLang = await Translator.DetectLanguage(text);
             var destLang = LanguageProvider.FindCodeByFullName(destFullName);
 
             if (srcLang == null || destLang == null)
                 return;
 
-            var rT = await Translater.Translate(sourceText.Text, srcLang, destLang);
+            var rT = await Translator.Translate(sourceText.Text, srcLang, destLang);
 
             destText.Text = rT;
         }
