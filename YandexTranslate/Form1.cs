@@ -43,6 +43,15 @@ namespace YandexTranslate
                 else
                     sourceText.TextChanged -= LiveTranslate;
             };
+
+            sourceLangSelector.SelectedIndexChanged += (sender, e) =>
+            {
+                var parent = sender as ComboBox;
+                if (parent.SelectedIndex == 0)
+                    swapLangButton.Enabled = false;
+                else
+                    swapLangButton.Enabled = true;
+            };
         }
 
         private async void InitVariables()
@@ -88,7 +97,7 @@ namespace YandexTranslate
         private async void LiveTranslate(object sender, EventArgs e)
         {
             (sender as Control).TextChanged -= LiveTranslate;
-            await Task.Delay(1000);
+            await Task.Delay(500);
             (sender as Control).TextChanged += LiveTranslate;
             await Translate(sourceText.Text);
         }
@@ -96,6 +105,15 @@ namespace YandexTranslate
         private async void translateButton_Click(object sender, EventArgs e)
         {
             await Translate(sourceText.Text);
+        }
+
+        private void swapLangButton_Click(object sender, EventArgs e)
+        {
+            var srcIdx = sourceLangSelector.SelectedIndex;
+            var destIdx = destLangSelector.SelectedIndex;
+
+            sourceLangSelector.SelectedIndex = destIdx + 1;
+            destLangSelector.SelectedIndex = srcIdx - 1;
         }
     }
 }

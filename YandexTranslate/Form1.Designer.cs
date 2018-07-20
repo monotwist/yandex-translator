@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.translateButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.destText = new System.Windows.Forms.TextBox();
             this.sourceText = new System.Windows.Forms.TextBox();
             this.sourceLangSelector = new System.Windows.Forms.ComboBox();
             this.destLangSelector = new System.Windows.Forms.ComboBox();
-            this.switchLangButton = new System.Windows.Forms.Button();
+            this.swapLangButton = new System.Windows.Forms.Button();
             this.liveTranslateSwitch = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -97,17 +98,19 @@
             this.destLangSelector.Size = new System.Drawing.Size(145, 21);
             this.destLangSelector.TabIndex = 5;
             // 
-            // switchLangButton
+            // swapLangButton
             // 
-            this.switchLangButton.FlatAppearance.BorderSize = 0;
-            this.switchLangButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.switchLangButton.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.switchLangButton.Location = new System.Drawing.Point(53, 40);
-            this.switchLangButton.Name = "switchLangButton";
-            this.switchLangButton.Size = new System.Drawing.Size(46, 32);
-            this.switchLangButton.TabIndex = 6;
-            this.switchLangButton.Text = "↑↓";
-            this.switchLangButton.UseVisualStyleBackColor = true;
+            this.swapLangButton.Enabled = false;
+            this.swapLangButton.FlatAppearance.BorderSize = 0;
+            this.swapLangButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.swapLangButton.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.swapLangButton.Location = new System.Drawing.Point(53, 40);
+            this.swapLangButton.Name = "swapLangButton";
+            this.swapLangButton.Size = new System.Drawing.Size(46, 32);
+            this.swapLangButton.TabIndex = 6;
+            this.swapLangButton.Text = "↑↓";
+            this.swapLangButton.UseVisualStyleBackColor = true;
+            this.swapLangButton.Click += new System.EventHandler(this.swapLangButton_Click);
             // 
             // liveTranslateSwitch
             // 
@@ -127,14 +130,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 229);
             this.Controls.Add(this.liveTranslateSwitch);
-            this.Controls.Add(this.switchLangButton);
+            this.Controls.Add(this.swapLangButton);
             this.Controls.Add(this.destLangSelector);
             this.Controls.Add(this.sourceLangSelector);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.translateButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Yandex Translator";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -150,7 +154,7 @@
         private System.Windows.Forms.TextBox sourceText;
         private System.Windows.Forms.ComboBox sourceLangSelector;
         private System.Windows.Forms.ComboBox destLangSelector;
-        private System.Windows.Forms.Button switchLangButton;
+        private System.Windows.Forms.Button swapLangButton;
         private System.Windows.Forms.CheckBox liveTranslateSwitch;
     }
 }
