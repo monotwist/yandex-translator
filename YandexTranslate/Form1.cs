@@ -16,13 +16,11 @@ namespace YandexTranslate
         public Form1()
         {
             InitializeComponent();
-            this.Shown += (sender, e) =>
-            {
-                Init();
-            };
+            InitEvents();
+            InitVariables();
         }
 
-        private async void Init()
+        private void InitEvents()
         {
             panel1.Resize += (sender, e) =>
             {
@@ -32,6 +30,23 @@ namespace YandexTranslate
                 destText.Size = size;
                 destText.Location = new Point(size.Width, 0);
             };
+
+            sourceText.TextChanged += LiveTranslate;
+
+            liveTranslateSwitch.CheckedChanged += (sender, e) =>
+            {
+                if ((sender as CheckBox).Checked)
+                {
+                    sourceText.TextChanged -= LiveTranslate;
+                    sourceText.TextChanged += LiveTranslate;
+                }
+                else
+                    sourceText.TextChanged -= LiveTranslate;
+            };
+        }
+
+        private async void InitVariables()
+        {
             ApiSettings.ApiKey = "trnsl.1.1.20180720T045104Z.3b603be702905c49.b19db5e51d21fcc36424800c088a9819a376f447"; //ну я хуй знает, в шарпе все равно не спрячешь
             var uiLang = CultureInfo.InstalledUICulture.TwoLetterISOLanguageName.ToString();
             translateButton.Text = uiLang == "ru" ? "Перевести" : "Translate";
@@ -46,13 +61,16 @@ namespace YandexTranslate
             destLangSelector.SelectedIndex = 0;
             translateButton.Enabled = true;
         }
-        
-        private async void Translate(string text)
+
+        private async Task Translate(string text)
         {
+            if (string.IsNullOrEmpty(text))
+                return;
+
             var srcFullName = sourceLangSelector.SelectedItem.ToString();
             var destFullName = destLangSelector.SelectedItem.ToString();
 
-            
+
 
             var srcLang = LanguageProvider.FindCodeByFullName(srcFullName);
             if (srcFullName == "Auto" || srcFullName == "Авто")
@@ -67,9 +85,17 @@ namespace YandexTranslate
             destText.Text = rT;
         }
 
-        private void translateButton_Click(object sender, EventArgs e)
+        private async void LiveTranslate(object sender, EventArgs e)
         {
-            Translate(sourceText.Text);
+            (sender as Control).TextChanged -= LiveTranslate;
+            await Task.Delay(1000);
+            (sender as Control).TextChanged += LiveTranslate;
+            await Translate(sourceText.Text);
+        }
+
+        private async void translateButton_Click(object sender, EventArgs e)
+        {
+            await Translate(sourceText.Text);
         }
     }
 }
